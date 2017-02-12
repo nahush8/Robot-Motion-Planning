@@ -62,7 +62,7 @@ for fileIterator in range(0,3):
 			For example, for dijkstra, epsilon is 0 and so on. 
 			'''
 			for vertices in openList:
-				tempCostList.append((vertices, cost[vertices] + (algoIterator * heuristics(vertices)))
+				tempCostList.append((vertices, cost[vertices] + (algoIterator * heuristics(vertices))))
 			minCostVertex,minCost = min(tempCostList, key = lambda t: t[1])
 			tempCostList[:] = []
 			
