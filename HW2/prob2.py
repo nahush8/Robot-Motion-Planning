@@ -27,19 +27,18 @@ for fileIterator in range(0,3):
 	numOfVertices = int(data[0])
 	startingVertex = int(data[1])
 	goalVertex = int(data[2])
-	epsilon = 4
 	goalCoordinateX,goalCoordinateY = coordList[goalVertex-1]
 	goalCoordinateX = float(goalCoordinateX)
 	goalCoordinateY = float(goalCoordinateY)
 
 
 	for algoIterator in range(0,6):
-		def heuristics(vertices,epsilon):
+		def heuristics(vertices):
 
 			x,y = coordList[vertices-1]
 			x = float(x)
 			y = float(y)
-			return epsilon * sqrt((x-goalCoordinateX)*(x-goalCoordinateX)+(y-goalCoordinateY)*(y-goalCoordinateY))
+			return sqrt((x-goalCoordinateX)*(x-goalCoordinateX)+(y-goalCoordinateY)*(y-goalCoordinateY))
 
 		graph = []
 		adj = [[-99 for i in xrange(numOfVertices+1)] for i in xrange(numOfVertices+1)]
@@ -58,8 +57,12 @@ for fileIterator in range(0,3):
 		tempCostList = []
 
 		while True:	
+			'''
+			Depending on the algoIterator, heuristics epsilon will be selected.
+			For example, for dijkstra, epsilon is 0 and so on. 
+			'''
 			for vertices in openList:
-				tempCostList.append((vertices, cost[vertices] +  heuristics(vertices,algoIterator)))
+				tempCostList.append((vertices, cost[vertices] + (algoIterator * heuristics(vertices)))
 			minCostVertex,minCost = min(tempCostList, key = lambda t: t[1])
 			tempCostList[:] = []
 			
@@ -77,7 +80,7 @@ for fileIterator in range(0,3):
 								cost[i] = costNew
 							if i not in openList:
 								openList.append(i)
-								
+
 		output_costs_file.write(str(cost[goalVertex]) + "\t")
 		output_numiters_file.write(str(len(closedList)) + "\t")
 		print "========================="
