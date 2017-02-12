@@ -32,7 +32,7 @@ def heuristics(vertices):
 	x,y = coordList[vertices-1]
 	x = float(x)
 	y = float(y)
-	return sqrt((x-goalCoordinateX)*(x-goalCoordinateX)+(y-goalCoordinateY)*(y-goalCoordinateY))
+	return sigma * sqrt((x-goalCoordinateX)*(x-goalCoordinateX)+(y-goalCoordinateY)*(y-goalCoordinateY))
 
 graph = []
 adj = [[-99 for i in xrange(numOfVertices+1)] for i in xrange(numOfVertices+1)]
@@ -55,7 +55,7 @@ tempCostList = []
 
 while True:	
 	for vertices in openList:
-		tempCostList.append((vertices, cost[vertices] + heuristics(vertices)))
+		tempCostList.append((vertices, cost[vertices] +  heuristics(vertices)))
 	print tempCostList
 	minCostVertex,minCost = min(tempCostList, key = lambda t: t[1])
 	tempCostList[:] = []
