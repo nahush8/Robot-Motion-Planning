@@ -1,6 +1,9 @@
 import sys
 from math import sqrt
 
+'''
+These are the lists storing the files.
+'''
 coordList = []
 coordFileList = ['coords_1.txt','coords_2.txt','coords_3.txt']
 inputFileList = ['input_1.txt','input_2.txt','input_3.txt']
@@ -31,7 +34,9 @@ for fileIterator in range(0,3):
 	goalCoordinateX = float(goalCoordinateX)
 	goalCoordinateY = float(goalCoordinateY)
 
-
+	'''
+	6 algorithms , dijkstra, astar, and four versions of weighted astar
+	'''
 	for algoIterator in range(0,6):
 		def heuristics(vertices):
 
@@ -55,11 +60,18 @@ for fileIterator in range(0,3):
 		cost[startingVertex] = 0
 		openList.append(startingVertex)
 		tempCostList = []
-
+		'''
+		STart with the open list as startingVertex
+		'''
 		while True:	
 			'''
 			Depending on the algoIterator, heuristics epsilon will be selected.
 			For example, for dijkstra, epsilon is 0 and so on. 
+			'''
+
+			'''
+			FInd the minimum cost + heuristics value from the open list
+			remove it from the open list, put it in the closed list.
 			'''
 			for vertices in openList:
 				tempCostList.append((vertices, cost[vertices] + (algoIterator * heuristics(vertices))))
@@ -71,7 +83,11 @@ for fileIterator in range(0,3):
 			
 			if minCostVertex == goalVertex:
 				break
-			
+			'''
+			For all the neighbours of the minCostVertex already not in the closedList
+			examine the cost to come function and update it if cost[i] > costNew
+			If the vertex does not exist in the openList add it in the openList
+			'''
 			for i in range(1,numOfVertices+1):
 					if adj[minCostVertex][i] != -99:
 						if i not in closedList:
@@ -81,6 +97,9 @@ for fileIterator in range(0,3):
 							if i not in openList:
 								openList.append(i)
 
+		'''
+		Output the optimal final cost and number of iterations
+		'''
 		output_costs_file.write(str(cost[goalVertex]) + "\t")
 		output_numiters_file.write(str(len(closedList)) + "\t")
 		print "========================="
