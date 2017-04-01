@@ -1,0 +1,27 @@
+import sys
+
+fname = sys.argv[1]
+with open(fname) as f:
+	data = f.readlines()
+f.close()
+data = [x.strip() for x in data] #Getting the input data from the file
+numOfVertices = int(data[0])
+startingVertex = int(data[1])
+goalVertex = int(data[2])
+print numOfVertices
+print startingVertex
+print goalVertex
+
+graph = []
+numOfEdges = []
+adj = [[0 for i in xrange(numOfVertices+1)] for i in xrange(numOfVertices+1)]
+for x in range(3,len(data)):
+	a = int(data[x].split()[0])
+	b = int(data[x].split()[1])
+	c = float(data[x].split()[2])
+	graph.append([a,b,c]) #Creating a graph of vertices and edges
+	adj[a][b] = c #creating an adjacency matrix'
+
+for i in range(1,numOfVertices +1):
+	if adj[currVertex][i] != 0:
+		
