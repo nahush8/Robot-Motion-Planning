@@ -45,11 +45,12 @@ for i in range(1,numOfVertices+1):
 
 #print neighborList
 
-
+'''
 for i in range (0,numOfVertices-1): #worst case there would be numOfVertices -1 edges so iterating over all the edges
 	for u, v, w in graph:
 		if dist[u] != float("inf") and dist[u] + w < dist[v]:
 			dist[v] = dist[u] + w #Updating value function
+'''
 '''
 for i in range(1,numOfVertices+1):
 	for index, node in enumerate(neighborList[i]):
@@ -57,23 +58,32 @@ for i in range(1,numOfVertices+1):
 		print dist[node]
 		print "======="
 '''
-for itr in range(0,100):
-	for i in range(1,numOfVertices +1):
-		for index, node in enumerate(neighborList[i]):
-				tempList.append(dist[node])
-				tempNodeList.append(node)
-		if tempList and tempNodeList:
-			intendedVertex = tempNodeList[tempList.index(min(tempList))]
-		tempList[:] = []
-		tempNodeList[:]=[]
-		sumValueFn = 0
+#for itr in range(0,100):
+for i in range(1,numOfVertices +1):
+	'''
+	for index, node in enumerate(neighborList[i]):
+			tempList.append(dist[node])
+			tempNodeList.append(node)
+	if tempList and tempNodeList:
+		intendedVertex = tempNodeList[tempList.index(min(tempList))]
+	tempList[:] = []
+	tempNodeList[:]=[]
+	'''
+	sumValueFn = 0
+	for index, node in enumerate(neighborList[i]):
+		intendedVertex = node
 		for index2, node2 in enumerate(neighborList[i]):
 			if node2 == intendedVertex:
 				sumValueFn += Tij * (-adj[i][node2] + valueFn[node2])
 			else:
 				sumValueFn += (TijPrime/(numOfEdges[i]-1)) * (-adj[i][node2] + valueFn[node2])
-		valueFn[i] = sumValueFn
+		tempList.append(sumValueFn)
+		sumValueFn = 0
+	valueFn[i] = max(tempList)
+	tempList[:]=[]
 
+tempList[:]=[]	
+tempNodeList[:] = []
 for i in range(1,numOfVertices +1):
 	for index, node in enumerate(neighborList[i]):
 		tempList.append(valueFn[node])
