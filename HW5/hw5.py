@@ -89,3 +89,12 @@ for i in range(1,numOfVertices+1):
 del valueFn[0]
 print valueFn
 print path
+
+output = open('output.txt','w')
+for item in valueFn:
+	output.write("%s,"% item)
+output.write("\n")
+
+for item in path:
+	output.write("%s,"% item)
+output.close()
