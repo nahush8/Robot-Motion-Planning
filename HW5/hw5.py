@@ -1,6 +1,7 @@
 import sys
 from operator import itemgetter
 import math
+import copy
 
 fname = sys.argv[1]
 with open(fname) as f:
@@ -43,30 +44,8 @@ for i in range(1,numOfVertices+1):
 	neighborList.append(tempNodeList)
 
 #print neighborList
-'''
-for i in range (0,numOfVertices-1): #worst case there would be numOfVertices -1 edges so iterating over all the edges
-	for u, v, w in graph:
-		if dist[u] != float("inf") and dist[u] + w < dist[v]:
-			dist[v] = dist[u] + w #Updating value function
-'''
-'''
-for i in range(1,numOfVertices+1):
-	for index, node in enumerate(neighborList[i]):
-		print node 
-		print dist[node]
-		print "======="
-'''
-for itr in range(0,50):
+for itr in range(0,100):
 	for i in range(1,numOfVertices+1):
-		'''
-		for index, node in enumerate(neighborList[i]):
-				tempList.append(dist[node])
-				tempNodeList.append(node)
-		if tempList and tempNodeList:
-			intendedVertex = tempNodeList[tempList.index(min(tempList))]
-		tempList[:] = []
-		tempNodeList[:]=[]
-		'''
 		sumValueFn = 0
 		for index, node in enumerate(neighborList[i]):
 			intendedVertex = node
@@ -81,26 +60,31 @@ for itr in range(0,50):
 			sumValueFn = 0
 		valueFn[i] = max(tempList)
 		tempList[:]=[]
-
-
-#for itr in range(0,100):
-
+finalist = []
+for u in range(0,len(neighborList[numOfVertices])):
+	finalist.append(neighborList[numOfVertices][u])
 for i in range(1,numOfVertices+1):
 	tempNodeList[:] = []
-	if i == 110:
-		print numOfVertices
-		print neighborList[i-1]
-	for index, node in enumerate(neighborList[i]):
-		#print node
-		tempList.append(valueFn[node])
-		tempNodeList.append(node)
-
-	if tempList and tempNodeList:
-		nextVertex = tempNodeList[tempList.index(max(tempList))]
-		path.append((nextVertex))
-	tempList[:] = []
-	tempNodeList[:]=[]
-
+	if i == numOfVertices:
+		for index, node in enumerate(finalist):
+			#print node
+			tempList.append(valueFn[node])
+			tempNodeList.append(node)
+		if tempList and tempNodeList:
+			nextVertex = tempNodeList[tempList.index(max(tempList))]
+			path.append((nextVertex))
+		tempList[:] = []
+		tempNodeList[:]=[]
+	else:
+		for index, node in enumerate(neighborList[i]):
+			#print node
+			tempList.append(valueFn[node])
+			tempNodeList.append(node)
+		if tempList and tempNodeList:
+			nextVertex = tempNodeList[tempList.index(max(tempList))]
+			path.append((nextVertex))
+		tempList[:] = []
+		tempNodeList[:]=[]
 
 del valueFn[0]
 print valueFn
