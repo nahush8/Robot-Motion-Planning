@@ -3,6 +3,7 @@ from operator import itemgetter
 import math
 import copy
 
+
 fname = sys.argv[1]
 with open(fname) as f:
 	data = f.readlines()
@@ -44,7 +45,7 @@ for i in range(1,numOfVertices+1):
 	neighborList.append(tempNodeList)
 
 #print neighborList
-for itr in range(0,100):
+for itr in range(0,50):
 	for i in range(1,numOfVertices+1):
 		sumValueFn = 0
 		for index, node in enumerate(neighborList[i]):
@@ -90,7 +91,7 @@ del valueFn[0]
 print valueFn
 print path
 
-output = open('output.txt','w')
+output = open('output_2.txt','w')
 for item in valueFn:
 	output.write("%s,"% item)
 output.write("\n")
